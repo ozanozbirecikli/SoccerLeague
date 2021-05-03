@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_start"
+    app:startDestination="@id/startingFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/startingFragment"
+        android:name="com.example.soccerleague.StartingPage.StartingFragment"
+        android:label="fragment_starting"
+        tools:layout="@layout/fragment_starting">
+        <action
+            android:id="@+id/action_startingFragment_to_nav_graph_league"
+            app:destination="@id/nav_graph_league"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_down"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_out_up"/>
+    </fragment>
+    <include app:graph="@navigation/nav_graph_league" />
+</navigation>
