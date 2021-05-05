@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/backgroundColor"
     tools:context=".LeagueActivity.LeagueDashboardFragment">
 
     <RelativeLayout
@@ -77,57 +77,6 @@
                 android:background="@drawable/rounded_corner_gray"
                 android:orientation="vertical"
                 android:padding="10dp">
-
-                <!--                <TextView-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:gravity="center"-->
-                <!--                    android:text="Enter information to create the league"-->
-                <!--                    android:textColor="@color/colorPrimary"-->
-                <!--                    android:textSize="18sp"-->
-                <!--                    android:textStyle="italic" />-->
-
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    style="@style/TextLabel"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginStart="15dp"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:layout_marginEnd="15dp"-->
-                <!--                    app:counterEnabled="true"-->
-                <!--                    app:counterMaxLength="30"-->
-                <!--                    app:startIconTint="@color/colorPrimary">-->
-
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:id="@+id/nameOfLeague"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:backgroundTint="@color/colorPrimary"-->
-                <!--                        android:hint="Name Of The League"-->
-                <!--                        android:inputType="text" />-->
-
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-                <!--                <com.google.android.material.textfield.TextInputLayout-->
-                <!--                    android:id="@+id/teamsNumberLayout"-->
-                <!--                    style="@style/TextLabel"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginStart="15dp"-->
-                <!--                    android:layout_marginTop="20dp"-->
-                <!--                    android:layout_marginEnd="15dp"-->
-                <!--                    app:startIconTint="@color/colorPrimary">-->
-
-                <!--                    <com.google.android.material.textfield.TextInputEditText-->
-                <!--                        android:id="@+id/teamsNumber"-->
-                <!--                        android:layout_width="match_parent"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:backgroundTint="@color/colorPrimary"-->
-                <!--                        android:hint="Number of Teams in League"-->
-                <!--                        android:inputType="number" />-->
-
-                <!--                </com.google.android.material.textfield.TextInputLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -212,7 +161,6 @@
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="50dp"
                     android:background="@drawable/rounded_corner_red"
                     android:gravity="center"
                     android:padding="10dp"
@@ -221,7 +169,23 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+                <Switch
+                    android:id="@+id/enable_dark_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="50dp"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="right"
+                    android:text="Dark Mode"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    tools:context=".LeagueActivity.ScoreBoardFragment">
+    tools:context=".LeagueActivity.Weeks.SecondWeekFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Socre Board"
+        android:text="Second Week"
         android:gravity="center"/>
 
 </FrameLayout>
