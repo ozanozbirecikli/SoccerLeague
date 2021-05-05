@@ -1,14 +1,20 @@
 package com.example.soccerleague.LeagueActivity
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.soccerleague.R
+import com.example.soccerleague.Supporters.Utils
 
 class LeagueDashboardFragment : Fragment() {
 
@@ -43,9 +49,37 @@ class LeagueDashboardFragment : Fragment() {
         view.findViewById<TextView>(R.id.score_board).setOnClickListener {
             navController!!.navigate(R.id.action_createLeagueFragment_to_scoreBoardFragment)
         }
+
+        view.findViewById<TextView>(R.id.delete_league).setOnClickListener {
+            Utils.ExitUser(context as Context)
+        }
     }
 
     fun mDefineView(view: View) {
+
+        val preferences =
+            context?.getSharedPreferences("DARKMODEPREFERENCE", Context.MODE_PRIVATE)
+        val preferenceEdit = preferences?.edit()
+        val isNightModeOn:Boolean = preferences!!.getBoolean("night_mode_on", false)
+
+        val darkModeSwitch = view.findViewById<Switch>(R.id.enable_dark_mode)
+        if(isNightModeOn)
+            darkModeSwitch.isChecked = true
+
+        darkModeSwitch.setOnClickListener {
+
+            if (isNightModeOn) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                preferenceEdit?.putBoolean("night_mode_on", false)
+                preferenceEdit?.apply()
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                preferenceEdit?.putBoolean("night_mode_on", true)
+                preferenceEdit?.apply()
+            }
+
+
+        }
     }
 
 }
