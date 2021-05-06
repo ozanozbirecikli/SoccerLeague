@@ -3,6 +3,7 @@ package com.example.soccerleague.Requests
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.example.soccerleague.Database.TeamModel
 import com.example.soccerleague.Supporters.APIController
 import com.example.soccerleague.Supporters.DialogSupport
 import com.example.soccerleague.Supporters.VolleyService
@@ -31,7 +32,7 @@ class GetTeamById {
         val apiController = APIController(service)
         val path = RequestUrls.teamNames
         val params = JSONObject()
-        lateinit var responseTeam: GetTeamNames.TeamName
+        lateinit var responseTeam: TeamModel
 
         dialog.showLoadingDialog(mActivity)
 
@@ -42,7 +43,7 @@ class GetTeamById {
                 Log.wtf("OK", "Reponses of Team name Fetched Successfully!")
 
                 responseTeam =
-                    gson.fromJson<GetTeamNames.TeamName>(response.toString(), GetTeamNames.TeamName::class.java)
+                    gson.fromJson<TeamModel>(response.toString(), TeamModel::class.java)
 
                 listener!!.sendResponse(responseTeam)
 

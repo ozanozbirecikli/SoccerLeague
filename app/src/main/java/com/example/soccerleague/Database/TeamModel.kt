@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class TeamModel(
     @PrimaryKey
     val id: Int,
-    var Name: String,
-    var Score: Int
+    var teamName: String,
+    var score: Int= 0
 )
 
