@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.soccerleague.Database.TeamModel
 import com.example.soccerleague.R
 import com.example.soccerleague.Requests.GetTeamById
 import com.example.soccerleague.Requests.GetTeamNames
@@ -53,8 +54,8 @@ class TeamsFragment : Fragment() {
         teams.setListener(object : GetTeamNames.Listener {
             override fun sendResponse(meta: Any?) {
                 if (meta != null) {
-                    val responseList: List<GetTeamNames.TeamName> =
-                        meta as List<GetTeamNames.TeamName>
+                    val responseList: List<TeamModel> =
+                        meta as List<TeamModel>
                     Log.wtf("response:", "Response is: " + meta.toString())
                     mTeamsRecyclerView.adapter = mTeamAdapter(responseList)
                 }
@@ -73,7 +74,7 @@ class TeamsFragment : Fragment() {
 
     }
 
-    class mTeamAdapter(val mList: List<GetTeamNames.TeamName>) :
+    class mTeamAdapter(val mList: List<TeamModel>) :
         RecyclerView.Adapter<mTeamAdapter.TeamsViewHolder>() {
 
 

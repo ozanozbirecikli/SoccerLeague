@@ -3,6 +3,7 @@ package com.example.soccerleague.Requests
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import com.example.soccerleague.Database.TeamModel
 import com.example.soccerleague.Supporters.APIController
 import com.example.soccerleague.Supporters.DialogSupport
 import com.example.soccerleague.Supporters.VolleyService
@@ -25,13 +26,12 @@ class GetTeamNames {
     fun getTeamNames(activity: FragmentActivity) {
 
         mActivity = activity
-
         var dialog = DialogSupport()
         val service = VolleyService()
         val apiController = APIController(service)
         val path = RequestUrls.teamNames
         val params = JSONObject()
-        lateinit var responseTeams: List<TeamName>
+        lateinit var responseTeams: List<TeamModel>
 
         dialog.showLoadingDialog(mActivity)
 
@@ -42,7 +42,7 @@ class GetTeamNames {
                 Log.wtf("OK", "Reponses of Teams Fetched Successfully!")
 
                 responseTeams =
-                    gson.fromJson(response.toString(), Array<TeamName>::class.java).toList()
+                    gson.fromJson(response.toString(), Array<TeamModel>::class.java).toList()
 
                 listener!!.sendResponse(responseTeams)
 
@@ -58,11 +58,5 @@ class GetTeamNames {
 
         }
     }
-
-    data class TeamName(
-
-        val id: Int = 0,
-        val teamName: String = ""
-    )
 
 }
