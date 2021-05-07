@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
@@ -56,8 +57,14 @@ class TeamsFragment : Fragment() {
                 if (meta != null) {
                     val responseList: List<TeamModel> =
                         meta as List<TeamModel>
-                    Log.wtf("response:", "Response is: " + meta.toString())
-                    mTeamsRecyclerView.adapter = mTeamAdapter(responseList)
+                    if(responseList.size == 0){
+                        Toast.makeText(getActivity(), "A problem occurred while fetching team list. Please try again", Toast.LENGTH_LONG).show()
+                        getFragmentManager()?.popBackStack()
+
+                    }else {
+                        Log.wtf("response:", "Response is: " + meta.toString())
+                        mTeamsRecyclerView.adapter = mTeamAdapter(responseList)
+                    }
                 }
             }
         })
