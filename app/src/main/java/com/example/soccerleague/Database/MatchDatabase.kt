@@ -23,7 +23,6 @@ abstract class MatchDatabase : RoomDatabase() {
                     ctx.applicationContext, MatchDatabase::class.java,
                     "team_database"
                 ).allowMainThreadQueries()
-//                    .fallbackToDestructiveMigration()
                     .build()
 
             return instance!!

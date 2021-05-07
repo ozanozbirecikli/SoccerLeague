@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.soccerleague.Database.MatchDatabase
 import com.example.soccerleague.R
 import com.example.soccerleague.Supporters.Utils
 
@@ -46,11 +47,9 @@ class LeagueDashboardFragment : Fragment() {
             navController!!.navigate(R.id.action_createLeagueFragment_to_teamsFragment)
         }
 
-        view.findViewById<TextView>(R.id.score_board).setOnClickListener {
-            navController!!.navigate(R.id.action_createLeagueFragment_to_scoreBoardFragment)
-        }
-
         view.findViewById<TextView>(R.id.delete_league).setOnClickListener {
+            var databaseManager = MatchDatabase.getInstance(getContext() as Context)
+            databaseManager.matchDao().deleteAllMatches()
             Utils.ExitUser(context as Context)
         }
     }

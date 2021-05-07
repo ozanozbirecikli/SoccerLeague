@@ -6,23 +6,20 @@ import androidx.room.*
 interface MatchDao {
 
     @Insert
-    fun insert(team: MatchModel)
+    fun insert(match: MatchModel)
 
-   /* @Insert
+    @Insert
     fun insertWeek(week: List<MatchModel>)
-*/
+
     @Update
-    fun update(team: MatchModel)
+    fun update(match: MatchModel)
 
     @Delete
-    fun delete(team: MatchModel)
+    fun delete(match: MatchModel)
 
-   /* @Query("drop table match_table")
-    fun deleteAllTeams()
-*/
-    /*@Query("select * from match_table order by Score desc")
-    fun getScoreList()
-*//*
+    @Query("delete from match_table")
+    fun deleteAllMatches()
+
     @Query("select * from match_table")
-    fun getAllTeams():List<MatchModel>*/
+    fun getAllMatches():List<MatchModel>
 }
