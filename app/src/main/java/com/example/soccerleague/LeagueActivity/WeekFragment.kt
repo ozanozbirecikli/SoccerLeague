@@ -56,11 +56,10 @@ class WeekFragment() : Fragment() {
             mWeekRecyclerView.visibility = View.GONE
             val halfText = view.findViewById<TextView>(R.id.half_text)
             halfText.visibility = View.VISIBLE
-            view.findViewById<RelativeLayout>(R.id.top_main_layout).setBackgroundColor(ContextCompat.getColor(context as Context, R.color.colorThird))
+            view.findViewById<RelativeLayout>(R.id.top_main_layout)
+                .setBackgroundColor(ContextCompat.getColor(context as Context, R.color.colorThird))
             view.findViewById<TextView>(R.id.toolbar_title).setText("Half Time")
             view.findViewById<TextView>(R.id.week).visibility = View.GONE
-
-            halfTime = false
 
         } else {
 
@@ -104,8 +103,8 @@ class WeekFragment() : Fragment() {
         override fun onBindViewHolder(holder: WeeksViewHolder, position: Int) {
             val obj = mList[position]
 
-            var firstTeam = obj.teamFirst.teamName
-            var secondTeam = obj.teamSecond.teamName
+            var firstTeam = obj.teamFirst
+            var secondTeam = obj.teamSecond
 
             holder.itemView.first_team_name.text = firstTeam
             holder.itemView.second_team_name.text = secondTeam

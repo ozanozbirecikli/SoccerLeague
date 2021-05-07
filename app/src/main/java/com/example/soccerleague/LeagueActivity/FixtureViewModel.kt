@@ -1,6 +1,5 @@
 package com.example.soccerleague.LeagueActivity
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -19,16 +18,16 @@ import kotlinx.android.synthetic.main.fragment_fixture.view.*
 import java.util.Collections.shuffle
 
 
-class FixtureFragment : Fragment() {
+class FixtureViewModel : Fragment() {
 
     var teams: List<TeamModel> = ArrayList<TeamModel>()
     var databaseManager: MatchDatabase? = null
+    lateinit var mView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        // databaseManager = MatchDatabase.getInstance(getContext() as Context)
+        databaseManager = MatchDatabase.getInstance(getContext() as Context)
 
     }
 
@@ -38,12 +37,13 @@ class FixtureFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_fixture, container, false)
-        mGetTeams(view)
+        mView = view
+        mGetTeams()
 
         return view
     }
 
-    fun initFragments(view: View) {
+    fun initFragments() {
 
         if (teams.size == 0) {
             Toast.makeText(
@@ -54,14 +54,15 @@ class FixtureFragment : Fragment() {
             getFragmentManager()?.popBackStack()
         }
 
+
         shuffle(teams)
-        var fixtureList = setFixture()
+        var fixtureList = setFixture(false)
         val halfTimeFragment = WeekFragment()
         halfTimeFragment.setHalf()
 
         fixtureList.add(halfTimeFragment)
         teams.reversed()
-        fixtureList.addAll(setFixture())
+        fixtureList.addAll(setFixture(true))
 
         val adapter = ViewPagerAdapter(
             fixtureList,
@@ -69,22 +70,30 @@ class FixtureFragment : Fragment() {
             lifecycle
         )
 
-        view.viewPager.adapter = adapter
+        mView.viewPager.adapter = adapter
     }
 
-    fun setFixture(): ArrayList<Fragment> {
+    fun mGetNumberOfTeams(): Int {
+//        return teams.size
+        return 8
+    }
+
+    fun mGetNumberOfWeeks(): Int {
+        return mGetNumberOfTeams() - 1
+    }
+
+    fun mGetHalfTime(): Int {
+        return mGetNumberOfTeams() / 2
+    }
+
+    fun setFixture(isSecondHalf:Boolean): ArrayList<Fragment> {
 
         val fragmentlist: ArrayList<Fragment> = ArrayList<Fragment>()
 
         Log.wtf("teams", "teams: " + teams.toString())
-        var numberOfTeams = teams.size
-        var numberOfWeeks = (numberOfTeams - 1)
-        Log.wtf("week", "numOfWeek: " + numberOfWeeks)
+        Log.wtf("week", "numOfWeek: " + mGetNumberOfWeeks())
 
-
-        var halfSize = numberOfTeams / 2
-
-        var numberOfMatches = numberOfWeeks * (numberOfTeams / 2)
+        var numberOfMatches = mGetNumberOfWeeks() * (mGetNumberOfTeams() / 2)
         Log.wtf("matches", "numOfMatches: " + numberOfMatches)
 
         Log.wtf("teams", "teams: " + teams.toString())
@@ -92,13 +101,15 @@ class FixtureFragment : Fragment() {
         var teamsNew: ArrayList<TeamModel> = ArrayList<TeamModel>(teams)
         var teamsSize = teamsNew.size
 
-        for (week in 0..(numberOfWeeks - 1)) {
+        for (week in 0..(mGetNumberOfWeeks() - 1)) {
 
             var currentWeek = week + 1
+            if(isSecondHalf)
+                currentWeek += mGetNumberOfWeeks()
             Log.wtf("week", "week: " + currentWeek)
 
             var matchesOfWeek = ArrayList<MatchModel>()
-            for (idx in 0..(halfSize - 1)) {
+            for (idx in 0..(mGetHalfTime() - 1)) {
 
                 var firstTeamIndex = (week + idx) % teamsSize
                 var secondTeamIndex = (week + teamsSize - idx) % teamsSize
@@ -106,8 +117,6 @@ class FixtureFragment : Fragment() {
                 if (idx == 0) {
                     firstTeamIndex = week
                     secondTeamIndex = (week + 4) % teamsSize
-                    Log.wtf("teamsize", "teamsize: " + teamsSize)
-
                 }
 
                 Log.wtf("teams", "firstTeam: " + firstTeamIndex)
@@ -119,8 +128,8 @@ class FixtureFragment : Fragment() {
                     "result",
                     "first: " + firstTeam + "Second: " + secondTeam
                 )
-                var match = MatchModel(0, firstTeam, secondTeam, currentWeek)
-                insertMatch(match)
+                var match = MatchModel(0, firstTeam.teamName, secondTeam.teamName, currentWeek)
+//                insertMatch(match)
                 matchesOfWeek.add(match)
             }
             insertWeek(matchesOfWeek)
@@ -129,21 +138,74 @@ class FixtureFragment : Fragment() {
                 WeekFragment()
             fragment.setList(matchesOfWeek)
             fragmentlist.add(fragment)
-
         }
 
         return fragmentlist
     }
 
     fun insertMatch(match: MatchModel) {
-        // databaseManager?.matchDao()?.insert(match)
+        databaseManager?.matchDao()?.insert(match)
+    }
+
+    fun getMatches(): List<MatchModel> {
+        return databaseManager!!.matchDao().getAllMatches()
     }
 
     fun insertWeek(week: List<MatchModel>) {
-        // databaseManager?.matchDao()?.insertWeek(week)
+        databaseManager?.matchDao()?.insertWeek(week)
     }
 
-    fun mGetTeams(view: View) {
+    fun mCheckRoomDB() {
+
+        var teamsFromRoom: ArrayList<MatchModel> = ArrayList(getMatches())
+        Log.wtf("matches", "matches: " + teamsFromRoom.toString())
+
+        if (teamsFromRoom != null && teamsFromRoom.size != 0) {
+            if (teamsFromRoom.isNotEmpty()) {
+                Log.wtf("matchesfromdb", "matches fetched ")
+
+                Log.wtf("matchesfromdb", "matches size: " + teamsFromRoom.size)
+
+                val fragmentlist: ArrayList<Fragment> = ArrayList<Fragment>()
+
+                var matchPerWeek = (teamsFromRoom.size / 2) / mGetNumberOfWeeks()
+
+
+                for (j in 0..(mGetNumberOfWeeks() * 2) - 1) {
+                    Log.wtf("week", "week: " + j)
+
+                    if(j != 6){
+                    var matches:ArrayList<MatchModel> = ArrayList<MatchModel>()
+                    for(i in 0..(matchPerWeek - 1)){
+                        matches.add(teamsFromRoom.get((j*4)+i))
+                    }
+
+                    var fragment = WeekFragment()
+                    fragment.setList(matches)
+                    fragmentlist.add(fragment)
+                    }else{
+                        val halfTimeFragment = WeekFragment()
+                        halfTimeFragment.setHalf()
+                        fragmentlist.add(halfTimeFragment)
+
+                    }
+                }
+
+                val adapter = ViewPagerAdapter(
+                    fragmentlist,
+                    requireActivity().supportFragmentManager,
+                    lifecycle
+                )
+                mView.viewPager.adapter = adapter
+
+            }
+        } else {
+
+            initFragments()
+        }
+    }
+
+    fun mGetTeams() {
 
         val getTeams = GetTeamNames()
         getTeams.getTeamNames(getActivity() as FragmentActivity)
@@ -154,8 +216,7 @@ class FixtureFragment : Fragment() {
                         meta as List<TeamModel>
                     teams = responseList
 
-                    initFragments(view)
-
+                    mCheckRoomDB()
                 }
             }
         })

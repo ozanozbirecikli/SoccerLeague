@@ -110,21 +110,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/score_board"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="50dp"
-                    android:background="@drawable/rounded_corner_green"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Score Board"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/delete_league"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

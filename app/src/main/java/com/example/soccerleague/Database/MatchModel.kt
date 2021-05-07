@@ -1,26 +1,20 @@
 package com.example.soccerleague.Database
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "match_table")
 data class MatchModel(
     @PrimaryKey(autoGenerate = true)
-    var matchId: Int = 0,
+    var matchId: Int,
 
-    @Embedded
-    var teamFirst: TeamModel,
+    @ColumnInfo(name = "team_first")
+    var teamFirst: String,
 
-    @Embedded
-    var teamSecond: TeamModel,
+    @ColumnInfo(name = "team_second")
+    var teamSecond: String,
 
     @ColumnInfo(name = "week")
     var week: Int
-) {
-
-}
-
+)
 
 

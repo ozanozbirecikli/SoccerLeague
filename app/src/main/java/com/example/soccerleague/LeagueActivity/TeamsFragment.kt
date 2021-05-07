@@ -68,17 +68,6 @@ class TeamsFragment : Fragment() {
                 }
             }
         })
-
-
-        /* var team5 = GetTeamById()
-         team5.getTeam(getActivity() as FragmentActivity, 5)
-         team5.setListener(object : GetTeamById.Listener {
-             override fun sendResponse(meta: Any?) {
-
-                 Log.wtf("response:", "Team 5 : " + meta.toString())
-             }
-         })*/
-
     }
 
     class mTeamAdapter(val mList: List<TeamModel>) :

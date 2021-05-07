@@ -51,7 +51,7 @@ class GetTeamById {
 
             } else {
                 Log.wtf("Error", "Unexpected Error")
-                Toast.makeText(activity, "Hata!", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, "Error!, Server is not reachable", Toast.LENGTH_SHORT)
                     .show()
                 dialog.DismissLoadingDialog()
 
